@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            margin-bottom: 10px;
+        }
+        .completed {
+            text-decoration: line-through;
+            color: #888;
+        }
+        .date {
+            font-size: 0.8em;
+            color: #888;
+            margin-left: 10px;
+        }
+        #exportOptions {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>To-Do List</h1>
+    <input type="text" id="taskInput" placeholder="Enter a new task">
+    <button onclick="addTask()">Add Task</button>
+    <div id="exportOptions">
+        <select id="exportFormat">
+            <option value="markdown">Markdown</option>
+            <option value="txt">TXT</option>
+        </select>
+        <button onclick="exportTasks()">Export</button>
+    </div>
+    <ul id="taskList"></ul>
+
+    <script>
+        let tasks = [];
+
+        function addTask() {
+            const input = document.getElementById('taskInput');
+            const task = input.value.trim();
+            if (task) {
+                const now = new Date();
+                const dateString = now.toLocaleString();
+                tasks.push({ content: task, timestamp: dateString, completed: false });
+                renderTasks();
+                input.value = '';
+            }
+        }
+
+        function toggleTask(index) {
+            tasks[index].completed = !tasks[index].completed;
+            renderTasks();
+        }
+
+        function renderTasks() {
+            const taskList = document.getElementById('taskList');
+            taskList.innerHTML = '';
+            tasks.forEach((task, index) => {
+                const li = document.createElement('li');
+                li.innerHTML = `
+                    <input type="checkbox" ${task.completed ? 'checked' : ''} onchange="toggleTask(${index})">
+                    <span class="${task.completed ? 'completed' : ''}">${task.content}</span>
+                    <span class="date">${task.timestamp}</span>
+                `;
+                taskList.appendChild(li);
+            });
+        }
+
+        function exportTasks() {
+            const format = document.getElementById('exportFormat').value;
+            let content;
+            let fileType;
+            let fileExtension;
+
+            if (format === 'markdown') {
+                content = tasks.map(todo => {
+                    return `- [${todo.completed ? 'x' : ' '}] ${todo.content} - ${todo.timestamp}`;
+                }).join('\n');
+                fileType = 'text/markdown';
+                fileExtension = 'md';
+            } else if (format === 'txt') {
+                content = tasks.map(todo => {
+                    return `${todo.completed ? '[DONE] ' : ''}${todo.content} - ${todo.timestamp}`;
+                }).join('\n');
+                fileType = 'text/plain';
+                fileExtension = 'txt';
+            }
+
+            const now = new Date();
+            const dateString = now.toISOString().split('T')[0];
+            const filename = `todos_${dateString}.${fileExtension}`;
+
+            const blob = new Blob([content], { type: fileType });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+    </script>
+</body>
+</html>
