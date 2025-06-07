@@ -1,0 +1,165 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  @font-face {
+    font-family: 'PixelatedSystem';
+    src: url('/fonts/W95FA.woff2') format('woff2'),
+         url('/fonts/W95FA.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'PixelMono';
+    src: url('/fonts/PixelMono.woff2') format('woff2'),
+         url('/fonts/PixelMono.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
+
+  * {
+    @apply border-border;
+  }
+  
+  html, body {
+    @apply bg-background text-foreground;
+    font-family: 'PixelatedSystem', system-ui, Avenir, Helvetica, Arial, sans-serif;
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  #root {
+    height: 100vh;
+    width: 100vw;
+  }
+
+  /* Disable text selection for OS-like experience */
+  .no-select {
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+  }
+
+  /* Allow text selection in specific areas */
+  .allow-select {
+    user-select: text;
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+  }
+
+  /* Pixelated image rendering */
+  .pixelated {
+    image-rendering: -moz-crisp-edges;
+    image-rendering: -webkit-crisp-edges;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+  }
+}
+
+@layer components {
+  /* Window chrome styles */
+  .window-chrome {
+    @apply border-2 border-t-w95-white border-l-w95-white border-r-w95-darkgrey border-b-w95-darkgrey bg-w95-silver shadow-window;
+  }
+
+  .window-chrome.active {
+    @apply shadow-window-active;
+  }
+
+  .window-titlebar {
+    @apply flex items-center justify-between bg-w95-blue text-w95-white p-1 select-none cursor-move;
+  }
+
+  .window-titlebar.inactive {
+    @apply bg-w95-darkgrey;
+  }
+
+  .window-button {
+    @apply w-4 h-4 bg-w95-silver shadow-w95-button active:shadow-w95-button-pressed text-w95-black text-xs leading-none p-0 cursor-pointer;
+  }
+
+  .window-content {
+    @apply p-4 bg-w95-silver overflow-auto;
+  }
+
+  /* Desktop styles */
+  .desktop-icon {
+    @apply flex flex-col items-center p-2 cursor-pointer hover:bg-mystic-purple hover:bg-opacity-20 rounded-none;
+  }
+
+  .desktop-icon.selected {
+    @apply bg-mystic-purple bg-opacity-30;
+  }
+
+  /* Taskbar styles */
+  .taskbar {
+    @apply fixed bottom-0 left-0 right-0 h-8 bg-w95-silver border-t-2 border-t-w95-white border-l-w95-white border-r-w95-darkgrey flex items-center px-1;
+  }
+
+  .taskbar-button {
+    @apply h-6 px-2 bg-w95-silver shadow-w95-button active:shadow-w95-button-pressed text-xs cursor-pointer flex items-center;
+  }
+
+  .taskbar-button.active {
+    @apply shadow-w95-button-pressed;
+  }
+
+  /* Context menu styles */
+  .context-menu {
+    @apply bg-w95-silver border-2 border-t-w95-white border-l-w95-white border-r-w95-darkgrey border-b-w95-darkgrey shadow-w95-panel-raised;
+  }
+
+  .context-menu-item {
+    @apply px-4 py-1 hover:bg-mystic-purple hover:text-w95-white cursor-pointer;
+  }
+
+  .context-menu-separator {
+    @apply border-t border-w95-darkgrey border-b border-w95-white my-1;
+  }
+}
+
+@layer utilities {
+  .drag-handle {
+    cursor: move;
+  }
+
+  .resize-handle {
+    cursor: nw-resize;
+  }
+
+  .resize-handle-n {
+    cursor: n-resize;
+  }
+
+  .resize-handle-s {
+    cursor: s-resize;
+  }
+
+  .resize-handle-e {
+    cursor: e-resize;
+  }
+
+  .resize-handle-w {
+    cursor: w-resize;
+  }
+
+  .resize-handle-ne {
+    cursor: ne-resize;
+  }
+
+  .resize-handle-nw {
+    cursor: nw-resize;
+  }
+
+  .resize-handle-se {
+    cursor: se-resize;
+  }
+
+  .resize-handle-sw {
+    cursor: sw-resize;
+  }
+}
