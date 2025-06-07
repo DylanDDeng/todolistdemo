@@ -1,0 +1,74 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  @font-face {
+    font-family: 'PixelatedSystem';
+    src: url('/fonts/W95FA.woff2') format('woff2'), /* Placeholder URL */
+         url('/fonts/W95FA.ttf') format('truetype'); /* Placeholder URL */
+    font-weight: normal;
+    font-style: normal;
+  }
+
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'PixelatedSystem', system-ui, Avenir, Helvetica, Arial, sans-serif;
+  }
+
+  /* Basic W95 styling for common elements */
+  button, .button {
+    @apply bg-secondary text-secondary-foreground shadow-w95-button active:shadow-w95-button-pressed p-1 px-2 border-none;
+    font-family: 'PixelatedSystem', sans-serif;
+  }
+
+  input, textarea, select {
+    @apply bg-input text-foreground border border-w95-darkgrey shadow-w95-panel p-1;
+    font-family: 'PixelatedSystem', sans-serif;
+  }
+
+  .w95-panel {
+    @apply shadow-w95-panel p-1;
+  }
+
+  .w95-panel-raised {
+    @apply shadow-w95-panel-raised p-1;
+  }
+
+  /* Simplified Retro Scrollbar Styling (Webkit only) */
+  ::-webkit-scrollbar {
+    width: 16px;
+    height: 16px;
+  }
+  ::-webkit-scrollbar-track {
+    background: theme('colors.w95-silver');
+  }
+  ::-webkit-scrollbar-thumb {
+    background: theme('colors.w95-darkgrey');
+    border: 1px solid theme('colors.w95-black');
+     /* Basic 3D effect for thumb */
+    box-shadow: inset -1px -1px theme('colors.w95-black'),
+                inset 1px 1px theme('colors.w95-white'),
+                inset -2px -2px theme('colors.w95-darkgrey'),
+                inset 2px 2px theme('colors.w95-silver');
+  }
+  ::-webkit-scrollbar-corner {
+    background: theme('colors.w95-silver');
+  }
+  /* Basic square buttons for scrollbar (no arrows without images) */
+  ::-webkit-scrollbar-button {
+    background-color: theme('colors.w95-silver');
+    display: block;
+    height: 16px;
+    width: 16px;
+    box-shadow: inset -1px -1px theme('colors.w95-darkgrey'),
+                inset 1px 1px theme('colors.w95-white');
+  }
+  ::-webkit-scrollbar-button:hover {
+    box-shadow: inset -1px -1px theme('colors.w95-white'),
+                inset 1px 1px theme('colors.w95-darkgrey');
+  }
+}
